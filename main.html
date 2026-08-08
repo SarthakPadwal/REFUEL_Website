@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>REFUEL | Smart Fuel Navigation for India</title>
+    
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link href="assets/ui-shell.css" rel="stylesheet"/>
+    <script src="assets/theme-init.js"></script>
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-primary": "#ffffff",
+              "surface-container-lowest": "#ffffff",
+              "surface-container": "#eeeeee",
+              "surface": "#f9f9f9",
+              "primary-container": "#ff725e",
+              "background": "#f9f9f9",
+              "on-surface-variant": "#58413e",
+              "primary": "#ab3526",
+            },
+            fontFamily: {
+              "headline": ["Manrope", "sans-serif"],
+              "body": ["Manrope", "sans-serif"],
+              "label": ["Manrope", "sans-serif"]
+            },
+          },
+        },
+      }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.4);
+        }
+        .text-editorial-gradient {
+            background: linear-gradient(135deg, #ab3526 0%, #ff725e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        /* Map custom styling to match UI */
+        .leaflet-container {
+            font-family: 'Manrope', sans-serif;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body class="site-shell bg-surface text-on-surface font-body selection:bg-primary-container selection:text-white dark:bg-stone-950 dark:text-stone-50">
+
+<!-- KEEP YOUR EXISTING <nav> HERE (untouched) -->
+
+<nav class="site-nav fixed top-0 w-full z-50 px-4 py-3 md:px-6 md:py-4" data-site-nav>
+    <div class="site-nav__bar max-w-7xl mx-auto rounded-[20px] py-2 px-2">
+        <div class="site-nav__layout px-5 md:px-6 py-2 flex items-center justify-between">
+            <a href="main.html" class="site-nav__brand group" aria-label="Refuel home">
+    <span class="site-nav__brand-mark flex items-center">
+
+  <img src="refuel_logo.png" 
+       class="h-16 md:h-[72px] w-auto object-contain block dark:hidden" 
+       alt="Refuel Logo Light">
+
+  <img src="web_logo.png" 
+       class="h-16 md:h-[72px] w-auto object-contain hidden dark:block" 
+       alt="Refuel Logo Dark">
+
+</span>
+            </a>
+
+            <div class="site-nav__desktop hidden md:flex items-center">
+                <div class="site-nav__menu flex items-center font-manrope tracking-tight font-semibold text-sm" data-nav-menu>
+                    <a href="main.html" class="site-nav__link" data-nav-link>Home</a>
+                    <a href="features.html" class="site-nav__link" data-nav-link>Features</a>
+                    <a href="docs.html" class="site-nav__link" data-nav-link>Docs</a>
+                    <a href="download.html" class="site-nav__link" data-nav-link>Download</a>
+                    <a href="contact.html" class="site-nav__link" data-nav-link>Contact</a>
+                    <span class="site-nav__underline" data-nav-underline></span>
+                </div>
+            </div>
+
+            <div class="site-nav__actions">
+                <button class="site-nav__theme-toggle hidden md:inline-flex" type="button" aria-label="Switch to dark mode" aria-pressed="false" data-theme-toggle>
+                    <span class="material-symbols-outlined site-nav__theme-icon" data-theme-icon>dark_mode</span>
+                </button>
+                <a href="download.html" class="site-nav__cta hidden md:inline-flex bg-gradient-to-br from-primary to-primary-container text-on-primary rounded-full font-bold text-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 active:scale-[0.98]">
+                    Get Started
+                </a>
+                <button class="site-nav__toggle md:hidden inline-flex items-center justify-center rounded-full text-stone-700" type="button" aria-label="Toggle navigation" aria-expanded="false" data-nav-toggle>
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="site-nav__drawer px-4 pb-4 md:hidden" data-nav-drawer>
+            <div class="rounded-[24px] border border-stone-200/80 bg-white/90 p-3 shadow-lg dark:border-stone-800 dark:bg-stone-900/95">
+                <div class="flex flex-col gap-1 font-manrope text-sm font-semibold">
+                    <a href="main.html" class="site-nav__mobile-link rounded-2xl px-4 py-3 text-stone-600 transition-colors" data-mobile-link>Home</a>
+                    <a href="features.html" class="site-nav__mobile-link rounded-2xl px-4 py-3 text-stone-600 transition-colors" data-mobile-link>Features</a>
+                    <a href="docs.html" class="site-nav__mobile-link rounded-2xl px-4 py-3 text-stone-600 transition-colors" data-mobile-link>Docs</a>
+                    <a href="download.html" class="site-nav__mobile-link rounded-2xl px-4 py-3 text-stone-600 transition-colors" data-mobile-link>Download</a>
+                    <a href="contact.html" class="site-nav__mobile-link rounded-2xl px-4 py-3 text-stone-600 transition-colors" data-mobile-link>Contact</a>
+                    <button class="site-nav__theme-toggle mt-2 w-full justify-center rounded-2xl" type="button" aria-label="Switch to dark mode" aria-pressed="false" data-theme-toggle>
+                        <span class="material-symbols-outlined site-nav__theme-icon" data-theme-icon>dark_mode</span>
+                        <span data-theme-label>Dark Mode</span>
+                    </button>
+                    <a href="download.html" class="site-nav__cta mt-2 rounded-2xl bg-gradient-to-br from-primary to-primary-container px-4 py-3 text-center text-sm font-bold text-white">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<main class="relative pt-24 pb-12 min-h-[90vh] flex items-center overflow-hidden">
+    <div class="absolute inset-0 -z-10 opacity-20 pointer-events-none">
+        <img class="w-full h-full object-cover grayscale" data-alt="abstract aerial view" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxYbYtgaLvWeJI8q_kiqhKAk_DopIGsDKoQAYi3kGXI5yoCjq-fxgrk6SmOAOXPfkIRZ85q1h7UMJHkz576KroGEy5TjbGLl5QG9VM4tHuZsqD9mNY84rGD3U8fSu_0brMo9JAQ4iZPoYlgpYfr5AtHhCh0qltNj9-CLnNgeOWKO4JfCJfCvDdwjJpgY1MyKAZ2A-QbnGV3BFs35pJbnczcYgBjeu9dZOnfih4ryw5ZvwOdvQjt7DbMMLzMjc7xO8iI4sgvVybwHY">
+    </div>
+
+    <div class="max-w-7xl mx-auto px-8 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+        <div class="lg:col-span-7">
+            <span class="inline-block bg-primary/10 text-primary font-bold tracking-[0.2em] text-[10px] px-3 py-1 rounded-full mb-6 uppercase">Intelligent Mobility Systems</span>
+
+            <h1 class="text-5xl md:text-7xl font-black text-on-surface leading-[1.05] tracking-tighter mb-6">
+                Smart Fuel <br>
+                <span class="text-editorial-gradient">Navigation</span> <br>
+                for India
+            </h1>
+
+            <p class="text-base md:text-lg text-on-surface-variant max-w-xl leading-relaxed mb-5">
+                Find the fastest fuel station nearby using real-time crowd data and smart routing.
+            </p>
+
+            <p class="text-xl md:text-2xl font-bold text-primary mb-6">
+                Not the nearest pump. The fastest one.
+            </p>
+
+            <!-- ✅ CHANGE 1: "AI-powered" → "crowd-powered" -->
+            <p class="text-sm text-stone-500 max-w-xl mb-8">
+                Avoid queues. Save fuel. Reduce waiting time with crowd-powered navigation built for Indian roads.
+            </p>
+
+            <div class="flex flex-wrap gap-4">
+                <a href="https://customer-assets-v7afamib.emergentagent.net/job_dummy-to-real-1/artifacts/download.html" class="bg-gradient-to-br from-primary to-primary-container text-on-primary px-7 py-3.5 rounded-full font-bold text-base shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 active:scale-[0.98] flex items-center gap-2">
+                    Download App
+                    <span class="material-symbols-outlined text-lg">download</span>
+                </a>
+
+                <a href="https://customer-assets-v7afamib.emergentagent.net/job_dummy-to-real-1/artifacts/features.html" class="bg-white border border-stone-200 text-stone-800 px-7 py-3.5 rounded-full font-bold text-base hover:border-primary/30 hover:bg-stone-50 hover:-translate-y-1 transition-all duration-300 active:scale-[0.98]">
+                    Explore Features
+                </a>
+            </div>
+
+            <p class="mt-6 text-[10px] text-stone-400 font-bold uppercase tracking-[0.2em]">
+                Trusted for smarter fuel decisions
+            </p>
+        </div>
+
+        <div class="lg:col-span-5 relative mt-8 lg:mt-0">
+            <div class="relative z-10 glass-card rounded-2xl p-3 shadow-2xl rotate-2 hover:rotate-0 transition-transform duration-500">
+                <img class="w-full h-auto rounded-xl" data-alt="Modern smartphone map" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBhDiRD3VpIkPxRlaL3S52O6otFNJQfwVWzt-knLpAmtdLtaYuKPMWWQJOf4jI5ovE-55nqlrc_FzoNivcDUkgVhuPICXkM9pjgB2zcZ0trmTNL5CTTslXgagKz32-ty9tsDkq9xYQycWMNudIcGMAymwEf-djk1xV_Z0xujbZYFBRg1iPppfy2ogdwJsZ4DF69c0QWJ5dPpHFk9rB3M8skjEtZU9O969wHizRWR6-X3f-7qn8G_6MItokCUpWlOqzH-tYBvdWc6IQ">
+
+                <!-- ✅ CHANGE 2: "Current Flow / Optimization Index" → "Live Crowd / Real-Time Accuracy" -->
+                <div class="absolute -bottom-6 -left-6 bg-white/90 backdrop-blur-md p-5 rounded-xl shadow-xl -rotate-3 border border-stone-100 max-w-[180px]">
+                    <div class="flex items-center gap-2 mb-1">
+                        <span class="material-symbols-outlined text-primary text-sm" data-weight="fill">speed</span>
+                        <span class="font-bold text-xs text-stone-700">Live Crowd</span>
+                    </div>
+                    <div class="text-2xl font-black text-stone-900">98%</div>
+                    <div class="text-[9px] text-stone-400 font-bold uppercase tracking-widest mt-1">Real-Time Accuracy</div>
+                </div>
+            </div>
+            <div class="absolute -top-12 -right-12 w-64 h-64 bg-primary-container/20 rounded-full blur-3xl -z-10"></div>
+        </div>
+    </div>
+</main>
+
+<section class="py-24 bg-surface-container-lowest border-t border-stone-100">
+    <div class="max-w-7xl mx-auto px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-start">
+            <div class="sticky top-32">
+                <span class="text-primary font-bold tracking-[0.2em] text-xs mb-4 block uppercase">Our Vision</span>
+                <h2 class="text-4xl md:text-5xl font-black tracking-tight mb-8">What is REFUEL?</h2>
+                <div class="space-y-6 text-on-surface-variant leading-relaxed text-lg">
+                    <p>REFUEL is a smart fuel and charging station navigation platform designed for Indian roads. It helps users locate nearby petrol, diesel, CNG, and EV stations using real-time GPS and location intelligence.</p>
+                    <p>Unlike traditional maps, REFUEL integrates crowd estimation, station availability, and predictive insights to guide users toward the fastest and most efficient fueling option — saving both time and fuel.</p>
+                </div>
+                <div class="mt-12 grid grid-cols-2 gap-8">
+                    <div>
+                        <div class="text-4xl font-black text-primary mb-1">Real-Time</div>
+                        <div class="text-sm font-medium text-stone-500 uppercase tracking-widest">Crowd Detection</div>
+                    </div>
+                    <div>
+                        <div class="text-4xl font-black text-primary mb-1">Multi-Fuel</div>
+                        <div class="text-sm font-medium text-stone-500 uppercase tracking-widest">Petrol • CNG • EV • Diesel</div>
+                    </div>
+                </div>
+            </div>
+            <div class="space-y-12">
+                <div class="rounded-2xl overflow-hidden group shadow-lg">
+                    <img class="w-full aspect-video object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Cinematic street" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZP1GGnwfgQ7NKrFohKn_4pApgVXYeRSndguXJFQvNqYfGQmlD3kwY4QIo3lTkTurTJBKEoFgOouNfcz71m3bV1g74JgKk6Ybw3fYYDwXo5sXL24J6zUdqyPT_U43BZen9d-N6TTn1Zl9VxzECbfB9frBn1GRW68W6Vb6vYQQP8O8aDI-gwTHCDatAKeWfLca2r5umqxNq5Y-sSBPdkMZakiJkvEXylW-IudSs6nzqp-ttTC8FQ2riilCmsjBX-iuP2T03UB2bGDQ">
+                </div>
+                <div class="mt-4">
+                    <h3 class="font-bold text-xl mb-2">The Problem: Systemic Congestion</h3>
+                    <p class="text-on-surface-variant text-sm leading-relaxed">Unpredictable demand at fuel stations leads to long queues, wasted fuel, and traffic congestion. Current navigation systems only show location — they do not consider waiting time, crowd levels, or fuel availability, leading to inefficient decisions.</p>
+                </div>
+
+                <div class="bg-surface p-10 rounded-2xl shadow-sm border border-stone-100">
+                    <h3 class="font-black text-2xl mb-8">India-Focused Solution</h3>
+                    <div class="space-y-8">
+                        <div class="flex gap-6 group">
+                            <div class="w-12 h-12 rounded-full bg-white shadow-sm border border-stone-100 flex items-center justify-center shrink-0 group-hover:bg-primary/10 transition-colors">
+                                <span class="material-symbols-outlined text-primary">group</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-1 text-stone-900">Crowdsourced Intelligence</h4>
+                                <p class="text-stone-500 text-sm leading-relaxed">Real-time data collected from user locations and station activity creates a dynamic crowd estimation system for each fuel station.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-6 group">
+                            <div class="w-12 h-12 rounded-full bg-white shadow-sm border border-stone-100 flex items-center justify-center shrink-0 group-hover:bg-primary/10 transition-colors">
+                                <span class="material-symbols-outlined text-primary">route</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-1 text-stone-900">Dynamic Rerouting</h4>
+                                <p class="text-stone-500 text-sm leading-relaxed">REFUEL analyzes distance, crowd levels, and estimated wait time to suggest the fastest station — not just the nearest one.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-24 bg-surface border-t border-stone-100">
+    <div class="max-w-7xl mx-auto px-8 text-center">
+        <span class="text-primary font-bold tracking-[0.2em] text-xs mb-4 block uppercase">HOW IT WORKS</span>
+        <h2 class="text-4xl md:text-5xl font-black mb-16 text-stone-900">Simple. Smart. Fast.</h2>
+
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="p-10 bg-white border border-stone-100 rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group text-left">
+                <div class="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary transition-colors duration-300">
+                    <span class="material-symbols-outlined text-primary text-3xl group-hover:text-white transition-colors duration-300">my_location</span>
+                </div>
+                <h3 class="font-bold text-xl mb-3 text-stone-900">Detect Location</h3>
+                <p class="text-sm text-stone-500 leading-relaxed">
+                    REFUEL uses real-time GPS to instantly detect nearby fuel stations seamlessly.
+                </p>
+            </div>
+
+            <div class="p-10 bg-white border border-stone-100 rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group text-left">
+                <div class="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary transition-colors duration-300">
+                    <span class="material-symbols-outlined text-primary text-3xl group-hover:text-white transition-colors duration-300">analytics</span>
+                </div>
+                <h3 class="font-bold text-xl mb-3 text-stone-900">Analyze Crowd</h3>
+                <p class="text-sm text-stone-500 leading-relaxed">
+                    Smart algorithms estimate waiting time and crowd density levels at each individual station.
+                </p>
+            </div>
+
+            <div class="p-10 bg-white border border-stone-100 rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group text-left">
+                <div class="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary transition-colors duration-300">
+                    <span class="material-symbols-outlined text-primary text-3xl group-hover:text-white transition-colors duration-300">bolt</span>
+                </div>
+                <h3 class="font-bold text-xl mb-3 text-stone-900">Fastest Station</h3>
+                <p class="text-sm text-stone-500 leading-relaxed">
+                    Get the best routing option tailored for speed and efficiency, not just proximity.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-24 bg-surface-container-lowest">
+    <div class="max-w-7xl mx-auto px-8 text-center">
+        <span class="text-primary font-bold tracking-[0.2em] text-xs mb-4 block uppercase">WHY REFUEL</span>
+        <h2 class="text-4xl md:text-5xl font-black mb-16 text-stone-900">Built for Real-World Problems</h2>
+
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="p-8 bg-surface border border-stone-100 rounded-2xl shadow-sm hover:shadow-lg hover:border-primary/30 transition-all duration-300 flex flex-col items-center group">
+                <div class="w-12 h-12 mb-5 rounded-full bg-white shadow-sm flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <span class="material-symbols-outlined text-primary">map</span>
+                </div>
+                <h3 class="font-bold text-lg mb-3 text-stone-900">Not Just Maps</h3>
+                <p class="text-sm text-stone-500 leading-relaxed">
+                    REFUEL doesn't just show fuel stations — it actively predicts waiting time and congestion.
+                </p>
+            </div>
+
+            <div class="p-8 bg-surface border border-stone-100 rounded-2xl shadow-sm hover:shadow-lg hover:border-primary/30 transition-all duration-300 flex flex-col items-center group">
+                <div class="w-12 h-12 mb-5 rounded-full bg-white shadow-sm flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <span class="material-symbols-outlined text-primary">directions_car</span>
+                </div>
+                <h3 class="font-bold text-lg mb-3 text-stone-900">Built for India</h3>
+                <p class="text-sm text-stone-500 leading-relaxed">
+                    Designed for real traffic, heavy queues, and the unique challenges faced by Indian drivers.
+                </p>
+            </div>
+
+            <div class="p-8 bg-surface border border-stone-100 rounded-2xl shadow-sm hover:shadow-lg hover:border-primary/30 transition-all duration-300 flex flex-col items-center group">
+                <div class="w-12 h-12 mb-5 rounded-full bg-white shadow-sm flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <span class="material-symbols-outlined text-primary">psychology</span>
+                </div>
+                <h3 class="font-bold text-lg mb-3 text-stone-900">Smart Engine</h3>
+                <p class="text-sm text-stone-500 leading-relaxed">
+                    AI-based routing dynamically suggests the fastest station to save your critical time.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-24 bg-surface overflow-hidden border-t border-stone-100">
+    <div class="max-w-7xl mx-auto px-8">
+        <div class="text-center mb-16">
+            <span class="text-primary font-bold tracking-[0.2em] text-xs mb-4 block uppercase">Live Coverage</span>
+            <h2 class="text-4xl md:text-5xl font-black tracking-tight text-stone-900">Track real-time fuel station activity.</h2>
+        </div>
+
+        <div class="relative h-[600px] w-full rounded-2xl overflow-hidden shadow-xl border border-stone-200">
+            <div id="osm-map" class="absolute inset-0 w-full h-full"></div>
+            <!-- Your existing Leaflet map init script/DOM stays here — untouched -->
+        </div>
+    </div>
+</section>
+
+<!-- KEEP YOUR EXISTING <footer> HERE (untouched) -->
+
+<footer class="w-full rounded-t-[40px] mt-12 bg-stone-100">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-12 px-12 py-20 max-w-7xl mx-auto font-manrope text-sm leading-relaxed">
+        <div class="col-span-1 md:col-span-1">
+            <div class="text-xl font-black text-stone-900 mb-6">REFUEL</div>
+            <p class="text-stone-500 mb-6">Transforming fuel access in India using real-time data, intelligent routing, and user-driven insights.</p>
+        </div>
+        <div>
+            <h4 class="font-bold text-stone-900 mb-6">Company</h4>
+            <ul class="space-y-4 text-stone-500">
+                <li><a class="hover:text-primary transition-colors" href="#">About Us</a></li>
+                <li><a class="hover:text-primary transition-colors" href="#">Press</a></li>
+                <li><a class="hover:text-primary transition-colors" href="#">Careers</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 class="font-bold text-stone-900 mb-6">Support</h4>
+            <ul class="space-y-4 text-stone-500">
+                <li><a class="hover:text-primary transition-colors" href="#">Help Center</a></li>
+                <li><a class="hover:text-primary transition-colors" href="#">Privacy</a></li>
+                <li><a class="hover:text-primary transition-colors" href="#">Terms</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 class="font-bold text-stone-900 mb-6">Social</h4>
+            <ul class="space-y-4 text-stone-500">
+                <li><a class="hover:text-primary transition-colors" href="#">Twitter</a></li>
+                <li><a class="hover:text-primary transition-colors" href="#">LinkedIn</a></li>
+                <li><a class="hover:text-primary transition-colors" href="#">GitHub</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="max-w-7xl mx-auto px-12 pb-12 border-t border-stone-200 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+        <p class="text-stone-500">© 2026 REFUEL. Architectural Documentarian Systems.</p>
+        <div class="flex gap-6">
+            <span class="text-xs font-bold text-stone-400 uppercase tracking-widest">Designed for India</span>
+            <span class="text-xs font-bold text-stone-400 uppercase tracking-widest">v2.4.0</span>
+        </div>
+    </div>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="assets/ui-shell.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Initialize Map in the container
+        // Center coordinated set to Bengaluru
+        var map = L.map('osm-map', {
+            scrollWheelZoom: false // Important: Prevents map from zooming when user scrolls the page
+        }).setView([12.9716, 77.5946], 12);
+
+        // Add standard OpenStreetMap tiles with a modern attribution
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors | REFUEL Live Data'
+        }).addTo(map);
+
+        // Create a custom modern icon mimicking the primary theme color
+        var customIcon = L.divIcon({
+            className: 'custom-div-icon',
+            html: `<div style="background-color: #ab3526; width: 16px; height: 16px; border-radius: 50%; border: 3px solid white; box-shadow: 0 0 10px rgba(171, 53, 38, 0.6);"></div>`,
+            iconSize: [16, 16],
+            iconAnchor: [8, 8]
+        });
+
+        // Add a few dummy markers to make it look "live"
+       
+
+        stations.forEach(function(coords) {
+            L.marker(coords, {icon: customIcon}).addTo(map);
+        });
+    });
+</script>
+
+</body>
+</html>

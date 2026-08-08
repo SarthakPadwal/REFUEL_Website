@@ -1,0 +1,339 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>REFUEL | Docs & System Architecture</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="assets/ui-shell.css" rel="stylesheet"/>
+<script src="assets/theme-init.js"></script>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-primary": "#ffffff",
+              "surface-container-lowest": "#ffffff",
+              "surface-container": "#eeeeee",
+              "on-error": "#ffffff",
+              "error-container": "#ffdad6",
+              "on-secondary": "#ffffff",
+              "tertiary-fixed-dim": "#cfc4c0",
+              "surface": "#f9f9f9",
+              "secondary-fixed": "#ffdad5",
+              "inverse-on-surface": "#f1f1f1",
+              "surface-container-high": "#e8e8e8",
+              "primary-container": "#ff725e",
+              "on-tertiary-fixed-variant": "#4c4542",
+              "background": "#f9f9f9",
+              "on-secondary-fixed": "#410000",
+              "on-primary-container": "#700703",
+              "on-error-container": "#93000a",
+              "on-surface-variant": "#58413e",
+              "surface-bright": "#f9f9f9",
+              "inverse-primary": "#ffb4a8",
+              "outline": "#8c716c",
+              "outline-variant": "#e0bfba",
+              "on-secondary-container": "#fffbff",
+              "primary-fixed-dim": "#ffb4a8",
+              "inverse-surface": "#2f3131",
+              "secondary-container": "#dd3023",
+              "on-tertiary": "#ffffff",
+              "primary": "#ab3526",
+              "on-primary-fixed-variant": "#891c12",
+              "secondary-fixed-dim": "#ffb4a9",
+              "surface-variant": "#e2e2e2",
+              "on-tertiary-container": "#3a3431",
+              "tertiary": "#645d59",
+              "tertiary-fixed": "#ebe0db",
+              "surface-dim": "#dadada",
+              "on-primary-fixed": "#410000",
+              "secondary": "#b8110c",
+              "error": "#ba1a1a",
+              "surface-container-low": "#f3f3f3",
+              "surface-container-highest": "#e2e2e2",
+              "on-background": "#1a1c1c",
+              "on-secondary-fixed-variant": "#930002",
+              "on-surface": "#1a1c1c",
+              "on-tertiary-fixed": "#201b18",
+              "surface-tint": "#ab3526",
+              "tertiary-container": "#a59c98",
+              "primary-fixed": "#ffdad4"
+            },
+            fontFamily: {
+              "headline": ["Manrope", "sans-serif"],
+              "body": ["Manrope", "sans-serif"],
+              "label": ["Manrope", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .tonal-shift-surface-variant {
+            background-color: #f3f3f3;
+        }
+    </style>
+</head>
+<body class="site-shell bg-surface font-body text-on-surface antialiased dark:bg-stone-950 dark:text-stone-50">
+<nav class="site-nav fixed top-0 w-full z-50 px-4 py-3 md:px-6 md:py-4" data-site-nav>
+<div class="site-nav__bar max-w-7xl mx-auto rounded-[20px] py-2 px-2">
+<div class="site-nav__layout px-5 md:px-6 py-2 flex items-center justify-between">
+<a href="main.html" class="site-nav__brand group" aria-label="Refuel home">
+<span class="site-nav__brand-mark flex items-center">
+<img src="refuel_logo.png" class="h-16 md:h-[72px] w-auto object-contain block dark:hidden" alt="Refuel Logo Light">
+<img src="web_logo.png" class="h-16 md:h-[72px] w-auto object-contain hidden dark:block" alt="Refuel Logo Dark">
+</span>
+</a>
+<div class="site-nav__desktop hidden md:flex items-center">
+<div class="site-nav__menu flex items-center font-manrope tracking-tight font-semibold text-sm" data-nav-menu>
+<a class="site-nav__link" href="main.html" data-nav-link>Home</a>
+<a class="site-nav__link" href="features.html" data-nav-link>Features</a>
+<a class="site-nav__link" href="docs.html" data-nav-link>Docs</a>
+<a class="site-nav__link" href="download.html" data-nav-link>Download</a>
+<a class="site-nav__link" href="contact.html" data-nav-link>Contact</a>
+<span class="site-nav__underline" data-nav-underline></span>
+</div>
+</div>
+<div class="site-nav__actions">
+<button class="site-nav__theme-toggle hidden md:inline-flex" type="button" aria-label="Switch to dark mode" aria-pressed="false" data-theme-toggle>
+<span class="material-symbols-outlined site-nav__theme-icon" data-theme-icon>dark_mode</span>
+</button>
+<a class="site-nav__cta hidden md:inline-flex bg-gradient-to-br from-primary to-primary-container text-on-primary rounded-full font-bold text-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 active:scale-[0.98]" href="download.html">Get Started</a>
+<button class="site-nav__toggle md:hidden inline-flex items-center justify-center rounded-full text-stone-700" type="button" aria-label="Toggle navigation" aria-expanded="false" data-nav-toggle>
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</div>
+<div class="site-nav__drawer px-4 pb-4 md:hidden" data-nav-drawer>
+<div class="rounded-[24px] border border-stone-200/80 bg-white/90 p-3 shadow-lg dark:border-stone-800 dark:bg-stone-900/95">
+<div class="flex flex-col gap-1 font-manrope text-sm font-semibold">
+<a href="main.html" class="site-nav__mobile-link rounded-2xl px-4 py-3 text-stone-600 transition-colors" data-mobile-link>Home</a>
+<a href="features.html" class="site-nav__mobile-link rounded-2xl px-4 py-3 text-stone-600 transition-colors" data-mobile-link>Features</a>
+<a href="docs.html" class="site-nav__mobile-link rounded-2xl px-4 py-3 text-stone-600 transition-colors" data-mobile-link>Docs</a>
+<a href="download.html" class="site-nav__mobile-link rounded-2xl px-4 py-3 text-stone-600 transition-colors" data-mobile-link>Download</a>
+<a href="contact.html" class="site-nav__mobile-link rounded-2xl px-4 py-3 text-stone-600 transition-colors" data-mobile-link>Contact</a>
+<button class="site-nav__theme-toggle mt-2 w-full justify-center rounded-2xl" type="button" aria-label="Switch to dark mode" aria-pressed="false" data-theme-toggle>
+<span class="material-symbols-outlined site-nav__theme-icon" data-theme-icon>dark_mode</span>
+<span data-theme-label>Dark Mode</span>
+</button>
+<a href="download.html" class="site-nav__cta mt-2 rounded-2xl bg-gradient-to-br from-primary to-primary-container px-4 py-3 text-center text-sm font-bold text-white">Get Started</a>
+</div>
+</div>
+</div>
+</nav>
+<main class="pt-32 pb-24 px-6 md:px-12 max-w-7xl mx-auto">
+<!-- Hero Title Section -->
+<header class="mb-24">
+<span class="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant font-bold mb-4 block">System Architecture</span>
+<h1 class="font-headline text-5xl md:text-7xl font-extrabold tracking-tighter text-on-surface leading-[1.1]">
+                Technical <span class="text-primary-container">Foundations</span>
+</h1>
+<p class="mt-8 text-lg md:text-xl text-on-surface-variant max-w-2xl leading-relaxed">
+                A complete technical overview of the REFUEL platform — a production-ready, three-tier system built on Flutter, PHP, and MySQL, powering real-time crowd intelligence across 44,000+ fuel and EV charging stations in India.
+            </p>
+</header>
+<!-- Technology Bento Grid (Architecture Diagram Style) -->
+<section class="grid grid-cols-1 md:grid-cols-12 gap-6 mb-32">
+<!-- Main Tech: Flutter -->
+<div class="md:col-span-8 glass-card rounded-lg p-10 flex flex-col justify-between group">
+<div class="flex justify-between items-start">
+<div class="bg-primary-container/10 p-4 rounded-2xl">
+<span class="material-symbols-outlined text-primary-container text-4xl" data-icon="flutter">flutter</span>
+</div>
+<span class="text-[10px] font-bold tracking-widest text-outline uppercase">Module 01 / Interface</span>
+</div>
+<div class="mt-12">
+<h3 class="text-3xl font-bold tracking-tight mb-4">Flutter Engine</h3>
+<p class="text-on-surface-variant leading-relaxed max-w-md">
+                        Cross-platform Android and iOS app built with Flutter and Riverpod 2.5. Service-oriented UI with animated 3D vehicle markers, animated bottom navigation, and smooth 60 FPS interactions on every screen.
+                    </p>
+</div>
+<div class="mt-8 pt-8 border-t border-outline-variant/15 flex gap-4">
+<span class="px-3 py-1 rounded-full bg-surface-container-low text-[10px] font-bold text-on-surface-variant">DART 3.0</span>
+<span class="px-3 py-1 rounded-full bg-surface-container-low text-[10px] font-bold text-on-surface-variant">RIVERPOD 2.5</span>
+</div>
+</div>
+<!-- Side Tech: PHP/MySQL Stack -->
+<div class="md:col-span-4 bg-surface-container-low rounded-lg p-8 flex flex-col">
+<div class="flex items-center gap-3 mb-8">
+<span class="material-symbols-outlined text-primary" data-icon="database">database</span>
+<h3 class="text-xl font-bold tracking-tight">Core API</h3>
+</div>
+<div class="space-y-6 flex-grow"><div class="p-4 bg-white rounded-xl shadow-sm">
+<p class="text-xs font-bold text-primary mb-1">PHP 8.2</p>
+<p class="text-sm text-on-surface-variant">Secure REST endpoints for auth, stations, crowd sessions, and voting — protected by JWT (HS256) and bcrypt password hashing.</p>
+</div>
+<div class="p-4 bg-white rounded-xl shadow-sm">
+<p class="text-xs font-bold text-primary mb-1">MySQL 8</p>
+<p class="text-sm text-on-surface-variant">A 19-table schema with spatial POINT indexing on 44,700+ station records for fast bounding-box and Haversine lookups.</p>
+</div>
+</div>
+</div>
+<!-- GPS/Geofencing -->
+<div class="md:col-span-6 glass-card rounded-lg p-8 relative overflow-hidden group">
+<div class="absolute -right-8 -top-8 opacity-5 group-hover:opacity-10 transition-opacity">
+<span class="material-symbols-outlined text-[12rem]" data-icon="location_on">location_on</span>
+</div>
+<div class="relative z-10">
+<div class="flex items-center gap-2 mb-6">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+<span class="text-xs font-bold tracking-widest uppercase text-on-surface-variant">Spatial Intelligence</span>
+</div>
+<h3 class="text-2xl font-bold mb-4">GPS &amp; Geofencing</h3>
+<p class="text-on-surface-variant leading-relaxed mb-6">
+                        Dual geofencing with a 50-metre entry zone and a 100-metre popup ring. Background GPS pings, cryptographic UUID v4 device IDs, and a 3-reading exit confirmation eliminate false positives and ghost sessions.
+                    </p>
+<div class="w-full h-32 rounded-xl bg-surface-container-high overflow-hidden">
+<img class="w-full h-full object-cover grayscale opacity-50" data-alt="Abstract minimalist topographic map lines in soft grey and white tones representing geographic precision" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5Fo1OsItmAR1f_HjB-wh7MyQywTg8t5q9_PzsE4mgwHcYtlAd5DOcTmm65iBgNKcZdh_YCfBYdqNfEyNLarphmh0QRPx6OAm0Uipkp6OW6iouBmZe3_ijRg6dBHNTQcI6LtEr_lCQMEztRYlovcCHnPQnpzV-1guu8ewp_O-qvNSgnlXD_KonKWTo-OtDClkLY0k_xRiC7mx5L4wpo1LSV7i-I54Xrsps5yYCLBEBY747vMQy7D6G_7eNC17rDGGe8KvMhszjAFc"/>
+</div>
+</div>
+</div>
+<!-- OpenStreetMap -->
+<div class="md:col-span-6 bg-[#1a1c1c] rounded-lg p-8 text-white group">
+<div class="flex justify-between items-start mb-12">
+<span class="material-symbols-outlined text-primary-container text-4xl" data-icon="map">map</span>
+<a href="https://www.openstreetmap.org/about" target="_blank" rel="noopener noreferrer" class="text-xs border border-white/20 px-4 py-2 rounded-full hover:bg-white hover:text-black transition-colors">Documentation</a>
+</div>
+<h3 class="text-2xl font-bold mb-4">OpenStreetMap Integration</h3>
+<p class="text-stone-400 leading-relaxed mb-8">
+                    Powered by flutter_map 6.1 with OpenStreetMap tiles — no Google Maps API dependency, no vendor lock-in. Colour-coded station pins and crowd-level badges are layered directly onto the map.
+                </p>
+<div class="flex items-center gap-4">
+<div class="h-1 flex-grow bg-white/10 rounded-full overflow-hidden">
+<div class="h-full bg-primary-container w-3/4"></div>
+</div>
+<span class="text-[10px] font-mono opacity-60">FLUTTER_MAP_6.1</span>
+</div>
+</div>
+</section>
+<!-- Documentation & Updates Timeline -->
+<section id="timeline" class="mt-40 scroll-mt-40">
+<div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+<div class="max-w-xl">
+<span class="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant font-bold mb-4 block">Project Ledger</span>
+<h2 class="font-headline text-4xl font-extrabold tracking-tight">System Updates &amp; Roadmap</h2>
+</div>
+<div class="flex gap-4">
+<a href="#timeline" class="bg-surface-container-low px-6 py-3 rounded-full text-sm font-semibold hover:bg-surface-container-high transition-colors">Release Notes</a>
+<a href="#timeline" class="bg-on-surface text-surface px-6 py-3 rounded-full text-sm font-semibold">View Full Log</a>
+</div>
+</div>
+<div class="space-y-0">
+<!-- Timeline Item 1 -->
+<div class="grid grid-cols-1 md:grid-cols-12 group">
+<div class="md:col-span-2 py-10 border-r border-outline-variant/20 relative">
+<div class="sticky top-40">
+<span class="text-sm font-bold text-primary">APR 2026</span>
+<div class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-3 h-3 bg-primary rounded-full ring-4 ring-surface"></div>
+</div>
+</div>
+<div class="md:col-span-10 py-10 pl-12">
+<div class="max-w-3xl">
+<span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest bg-surface-container px-2 py-1 rounded">Version 1.0.0</span>
+<h3 class="text-2xl font-bold mt-4 mb-4 group-hover:text-primary transition-colors">Crowd Intelligence Overhaul — Production Release</h3>
+<p class="text-on-surface-variant leading-relaxed mb-6">
+                                Vehicle-only crowd counting via <code class="text-xs bg-surface-container px-1.5 py-0.5 rounded">SUM(is_vehicle = 1)</code>, NULL-safe session binding in exit_station.php, and the adaptive multi-round popup system with self-tuning intervals (<code class="text-xs bg-surface-container px-1.5 py-0.5 rounded">MAX(4.0, avg_wait_minutes)</code>). Marked LIVE, DYNAMIC, and FULLY OPERATIONAL.
+                            </p>
+<div class="flex flex-wrap gap-2">
+<span class="text-xs px-3 py-1 rounded-full border border-outline-variant/30 text-on-surface-variant">#CrowdIntelligence</span>
+<span class="text-xs px-3 py-1 rounded-full border border-outline-variant/30 text-on-surface-variant">#PopupSystem</span>
+<span class="text-xs px-3 py-1 rounded-full border border-outline-variant/30 text-on-surface-variant">#ProductionReady</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Timeline Item 2 -->
+<div class="grid grid-cols-1 md:grid-cols-12 group">
+<div class="md:col-span-2 py-10 border-r border-outline-variant/20 relative">
+<div class="sticky top-40">
+<span class="text-sm font-bold text-on-surface-variant">MAR 2026</span>
+<div class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-3 h-3 bg-outline-variant rounded-full ring-4 ring-surface"></div>
+</div>
+</div>
+<div class="md:col-span-10 py-10 pl-12">
+<div class="max-w-3xl">
+<span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest bg-surface-container px-2 py-1 rounded">Version 0.8.0</span>
+<h3 class="text-2xl font-bold mt-4 mb-4 group-hover:text-primary transition-colors">Voting &amp; Device Identity Correction</h3>
+<p class="text-on-surface-variant leading-relaxed mb-6">
+                                Rewrote DeviceIdHelper to issue a cryptographic UUID v4 per install and purged legacy identifier keys. Fixed availability voting so every vote inserts a fresh row (no more overwrites), and introduced a 5-language preference screen — English, Hindi, Marathi, Tamil, and Telugu.
+                            </p>
+<div class="grid grid-cols-2 gap-4 mt-8">
+<img class="rounded-xl w-full h-40 object-cover grayscale" data-alt="Modern architectural glass building reflecting a blue sky with sharp angles and clean lines" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQOqytWu7V8jp-OBKYAVAViVn69yETyo2oZyYtlSs-Lfd4JTg8KmrEj-kutQZ0IcLbLJvN4B3fBw0bykap4qoPmRfd9mv44JlZo7FSNiGTrrum_5f0kFvd0nyfA2vpNasJnhX8w526vUoW7TtWfRg9hNGLhHZNqHETLVXpAG4l9wd7nxqAH5z5uIwKkpHVKHfF3LpLf1y4Ght-TSK4UeUe9-X-2xXmRN42hXZ_8YpKJNuSm-0rQpAdFuzrrqR0GPia6opJs2ppsnM"/>
+<img class="rounded-xl w-full h-40 object-cover grayscale" data-alt="Minimalist architectural interior with concrete walls and dramatic natural light casting long shadows" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTWElkpL3nOgQZeNAH8k1KPP9BlbdAzGcJQxYFSt2YoXUMzO7B0DrN7C7yE32ShxNLUqPujSw_Qo5JV_BKlq-HGTrvctIGluXdhFhZ6o8yMH-yt-xQhKBHJMVDjbJrRw6C6JTBJvqyZ9gFxzZzaoUy-Ikl_NcvjBIVvp1KltN8USWbSWAkAHhngsGw_XyKMJ2bOspmgU0stAzThg3Ano9X6i1ys_d_KRzqtmx1aWAUyz5TEjK2EPpoj8WVdqVA8LQFDVAm_8a6Zqs"/>
+</div>
+</div>
+</div>
+</div>
+<!-- Timeline Item 3 -->
+<div class="grid grid-cols-1 md:grid-cols-12 group">
+<div class="md:col-span-2 py-10 border-r border-outline-variant/20 relative">
+<div class="sticky top-40">
+<span class="text-sm font-bold text-on-surface-variant">JAN – FEB 2026</span>
+<div class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-3 h-3 bg-outline-variant rounded-full ring-4 ring-surface"></div>
+</div>
+</div>
+<div class="md:col-span-10 py-10 pl-12">
+<div class="max-w-3xl">
+<span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest bg-surface-container px-2 py-1 rounded">Version 0.1.0 → 0.5.0</span>
+<h3 class="text-2xl font-bold mt-4 mb-4 group-hover:text-primary transition-colors">Foundation &amp; Crowd System Activation</h3>
+<p class="text-on-surface-variant leading-relaxed mb-6">
+                                Initial build covering JWT authentication, OTP with rate limiting, vehicle management (up to 4 vehicles per user), and the 44,700-station data pipeline aggregated from OSM Overpass, GitHub GeoJSON, e-Amrit, and Open Charge Map. Crowd endpoints (enter / ping / exit) went live alongside a bounding-box pre-filter for station lookups.
+                            </p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer from JSON -->
+<footer class="w-full rounded-t-[40px] mt-24 bg-stone-100">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12 px-12 py-20 max-w-7xl mx-auto">
+<div class="md:col-span-2">
+<div class="text-xl font-black text-stone-900 mb-6">REFUEL</div>
+<p class="font-manrope text-sm leading-relaxed text-stone-500 max-w-sm">
+                    A real-time fuel and EV station navigation platform for Indian motorists. Built on Flutter, PHP, and MySQL — engineered for accuracy, community intelligence, and everyday reliability.
+                </p>
+</div>
+<div>
+<h4 class="font-bold text-stone-900 mb-6">Ecosystem</h4>
+<ul class="space-y-4">
+<li><a class="font-manrope text-sm text-stone-500 hover:text-[#FF725E] transition-colors" href="docs.html">Documentation</a></li>
+<li><a class="font-manrope text-sm text-stone-500 hover:text-[#FF725E] transition-colors" href="docs.html">System Architecture</a></li>
+<li><a class="font-manrope text-sm text-stone-500 hover:text-[#FF725E] transition-colors" href="docs.html#timeline">Release Log</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-stone-900 mb-6">Connect</h4>
+<ul class="space-y-4">
+<li><a class="font-manrope text-sm text-stone-500 hover:text-[#FF725E] transition-colors" href="contact.html">Contact</a></li>
+<li><a class="font-manrope text-sm text-stone-500 hover:text-[#FF725E] transition-colors" href="download.html">Download</a></li>
+<li><a class="font-manrope text-sm text-stone-500 hover:text-[#FF725E] transition-colors" href="features.html">Features</a></li>
+</ul>
+</div>
+</div>
+<div class="border-t border-stone-200 py-8 px-12 max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="font-manrope text-sm text-stone-500">© 2026 REFUEL. Real-Time Fuel &amp; EV Navigation for India.</p>
+<div class="flex gap-8">
+<a class="font-manrope text-sm text-stone-500 hover:text-[#FF725E]" href="#">Privacy</a>
+<a class="font-manrope text-sm text-stone-500 hover:text-[#FF725E]" href="#">Terms</a>
+</div>
+</div>
+</footer>
+<script src="assets/ui-shell.js"></script>
+</body></html>

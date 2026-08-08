@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>REFUEL | Features &amp; How It Works</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="assets/ui-shell.css" rel="stylesheet"/>
+<script src="assets/theme-init.js"></script>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-primary": "#ffffff",
+              "surface-container-lowest": "#ffffff",
+              "surface-container": "#eeeeee",
+              "on-error": "#ffffff",
+              "error-container": "#ffdad6",
+              "on-secondary": "#ffffff",
+              "tertiary-fixed-dim": "#cfc4c0",
+              "surface": "#f9f9f9",
+              "secondary-fixed": "#ffdad5",
+              "inverse-on-surface": "#f1f1f1",
+              "surface-container-high": "#e8e8e8",
+              "primary-container": "#ff725e",
+              "on-tertiary-fixed-variant": "#4c4542",
+              "background": "#f9f9f9",
+              "on-secondary-fixed": "#410000",
+              "on-primary-container": "#700703",
+              "on-error-container": "#93000a",
+              "on-surface-variant": "#58413e",
+              "surface-bright": "#f9f9f9",
+              "inverse-primary": "#ffb4a8",
+              "outline": "#8c716c",
+              "outline-variant": "#e0bfba",
+              "on-secondary-container": "#fffbff",
+              "primary-fixed-dim": "#ffb4a8",
+              "inverse-surface": "#2f3131",
+              "secondary-container": "#dd3023",
+              "on-tertiary": "#ffffff",
+              "primary": "#ab3526",
+              "on-primary-fixed-variant": "#891c12",
+              "secondary-fixed-dim": "#ffb4a9",
+              "surface-variant": "#e2e2e2",
+              "on-tertiary-container": "#3a3431",
+              "tertiary": "#645d59",
+              "tertiary-fixed": "#ebe0db",
+              "surface-dim": "#dadada",
+              "on-primary-fixed": "#410000",
+              "secondary": "#b8110c",
+              "error": "#ba1a1a",
+              "surface-container-low": "#f3f3f3",
+              "surface-container-highest": "#e2e2e2",
+              "on-background": "#1a1c1c",
+              "on-secondary-fixed-variant": "#930002",
+              "on-surface": "#1a1c1c",
+              "on-tertiary-fixed": "#201b18",
+              "surface-tint": "#ab3526",
+              "tertiary-container": "#a59c98",
+              "primary-fixed": "#ffdad4"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Manrope"],
+              "label": ["Manrope"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+      }
+      .glass-card {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+      }
+      .tonal-shift-surface-variant {
+        background-color: #f3f3f3;
+      }
+    </style>
+</head>
+<body class="site-shell bg-surface text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container dark:bg-stone-950 dark:text-stone-50">
+<nav class="site-nav fixed top-0 w-full z-50 px-4 py-3 md:px-6 md:py-4" data-site-nav>
+<div class="site-nav__bar max-w-7xl mx-auto rounded-[20px] py-2 px-2">
+<div class="site-nav__layout px-5 md:px-6 py-2 flex items-center justify-between">
+<a href="main.html" class="site-nav__brand group" aria-label="Refuel home">
+<span class="site-nav__brand-mark flex items-center">
+<img src="refuel_logo.png" class="h-16 md:h-[72px] w-auto object-contain block dark:hidden" alt="Refuel Logo Light">
+<img src="web_logo.png" class="h-16 md:h-[72px] w-auto object-contain hidden dark:block" alt="Refuel Logo Dark">
+</span>
+</a>
+<div class="site-nav__desktop hidden md:flex items-center">
+<div class="site-nav__menu flex items-center font-manrope tracking-tight font-semibold text-sm" data-nav-menu>
+<a class="site-nav__link" href="main.html" data-nav-link>Home</a>
+<a class="site-nav__link" href="features.html" data-nav-link>Features</a>
+<a class="site-nav__link" href="docs.html" data-nav-link>Docs</a>
+<a class="site-nav__link" href="download.html" data-nav-link>Download</a>
+<a class="site-nav__link" href="contact.html" data-nav-link>Contact</a>
+<span class="site-nav__underline" data-nav-underline></span>
+</div>
+</div>
+<div class="site-nav__actions">
+<button class="site-nav__theme-toggle hidden md:inline-flex" type="button" aria-label="Switch to dark mode" aria-pressed="false" data-theme-toggle>
+<span class="material-symbols-outlined site-nav__theme-icon" data-theme-icon>dark_mode</span>
+</button>
+<a class="site-nav__cta hidden md:inline-flex bg-gradient-to-br from-primary to-primary-container text-on-primary rounded-full font-bold text-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 active:scale-[0.98]" href="download.html">Get Started</a>
+<button class="site-nav__toggle md:hidden inline-flex items-center justify-center rounded-full text-stone-700" type="button" aria-label="Toggle navigation" aria-expanded="false" data-nav-toggle>
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</div>
+<div class="site-nav__drawer px-4 pb-4 md:hidden" data-nav-drawer>
+<div class="rounded-[24px] border border-stone-200/80 bg-white/90 p-3 shadow-lg dark:border-stone-800 dark:bg-stone-900/95">
+<div class="flex flex-col gap-1 font-manrope text-sm font-semibold">
+<a href="main.html" class="site-nav__mobile-link rounded-2xl px-4 py-3 text-stone-600 transition-colors" data-mobile-link>Home</a>
+<a href="features.html" class="site-nav__mobile-link rounded-2xl px-4 py-3 text-stone-600 transition-colors" data-mobile-link>Features</a>
+<a href="docs.html" class="site-nav__mobile-link rounded-2xl px-4 py-3 text-stone-600 transition-colors" data-mobile-link>Docs</a>
+<a href="download.html" class="site-nav__mobile-link rounded-2xl px-4 py-3 text-stone-600 transition-colors" data-mobile-link>Download</a>
+<a href="contact.html" class="site-nav__mobile-link rounded-2xl px-4 py-3 text-stone-600 transition-colors" data-mobile-link>Contact</a>
+<button class="site-nav__theme-toggle mt-2 w-full justify-center rounded-2xl" type="button" aria-label="Switch to dark mode" aria-pressed="false" data-theme-toggle>
+<span class="material-symbols-outlined site-nav__theme-icon" data-theme-icon>dark_mode</span>
+<span data-theme-label>Dark Mode</span>
+</button>
+<a href="download.html" class="site-nav__cta mt-2 rounded-2xl bg-gradient-to-br from-primary to-primary-container px-4 py-3 text-center text-sw font-bold text-white">Get Started</a>
+</div>
+</div>
+</div>
+</nav>
+<main class="pt-32">
+<!-- Hero Intro -->
+<section class="max-w-7xl mx-auto px-8 mb-24">
+<div class="flex flex-col md:flex-row items-end justify-between gap-8">
+<div class="max-w-2xl">
+<span class="text-primary font-bold tracking-widest text-xs uppercase mb-4 block">Core Intelligence</span>
+<h1 class="text-6xl md:text-7xl font-extrabold tracking-tighter leading-[0.9] text-on-surface mb-8">
+                        Every feature, <br/>built for Indian roads.
+                    </h1>
+</div>
+<div class="md:pb-4">
+<p class="text-on-surface-variant text-lg max-w-sm leading-relaxed">
+                        Real-time discovery of petrol, diesel, CNG, and EV charging stations — powered by live crowd data, community-verified availability, and a network of over 44,000 stations across India.
+                    </p>
+</div>
+</div>
+</section>
+<!-- Features Bento Grid -->
+<section class="max-w-7xl mx-auto px-8 mb-40">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- Real-time crowd detection -->
+<div class="md:col-span-8 group relative overflow-hidden rounded-lg bg-surface-container-low p-12 flex flex-col justify-end min-h-[460px]">
+<div class="absolute inset-0 z-0 opacity-20 group-hover:scale-105 transition-transform duration-700">
+<img class="w-full h-full object-cover" data-alt="abstract aerial visual of a busy city intersection at night with light trails and movement patterns" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3waRpUWsPZD1WqKO5Eqbv_y7Hu9uQWyTo2-Hk6933wlTRGMwmDnslgSznRrwFvd1jNjTfrY6KkQpbYor3oTEN63LKYzr8-6bISXBybW450ksOGovVXCbOsWkNvQv3WvC3HLOV_nxpNVdrhWyd4jp47Zlk6YmcmYw_Rj2DTo8TGWnk3AGAhfi7t4TwbNrVBiFpOXunk1MJN7xULKNVEqXeA-vEcPv4KpUCss0obHcGNJ2xm1INcWI_FrAXHNm9yX4V0nanzg-wHjU"/>
+</div>
+<div class="relative z-10 glass-card p-8 rounded-lg max-w-md border-outline-variant/10 border">
+<span class="material-symbols-outlined text-primary text-4xl mb-6 block" data-icon="groups">groups</span>
+<h3 class="text-3xl font-bold tracking-tight mb-4 text-on-surface">Real-time crowd detection</h3>
+<p class="text-on-surface-variant leading-relaxed">GPS-driven crowd tracking that counts real vehicles at each station using a 50-metre entry geofence, 30-second heartbeats, and community intent signals — no cameras, no guesswork.</p>
+</div>
+</div>
+<!-- AI-based wait time -->
+<div class="md:col-span-4 bg-tertiary-fixed rounded-lg p-10 flex flex-col justify-between group">
+<span class="material-symbols-outlined text-primary text-4xl group-hover:rotate-12 transition-transform" data-icon="avg_time">avg_time</span>
+<div>
+<h3 class="text-2xl font-bold tracking-tight mb-4 text-on-tertiary-fixed">Estimated wait time</h3>
+<p class="text-on-tertiary-fixed-variant text-sm leading-relaxed">A quality-weighted formula combines the current vehicle count with the average dwell time from the last 50 confirmed visits, so you know the wait before you arrive.</p>
+</div>
+</div>
+<!-- Smart station suggestions -->
+<div class="md:col-span-4 bg-surface-container-highest rounded-lg p-10 flex flex-col justify-between group">
+<span class="material-symbols-outlined text-primary text-4xl group-hover:scale-110 transition-transform" data-icon="auto_awesome">auto_awesome</span>
+<div>
+<h3 class="text-2xl font-bold tracking-tight mb-4 text-on-surface">Smart station suggestions</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">Stations are filtered and ranked by your primary vehicle's fuel type, live crowd level, and estimated wait — so the fastest option is always on top.</p>
+</div>
+</div>
+<!-- Multi-fuel support -->
+<div class="md:col-span-4 bg-white shadow-xl shadow-stone-200/50 rounded-lg p-10 flex flex-col justify-between group">
+<span class="material-symbols-outlined text-primary text-4xl" data-icon="ev_station">ev_station</span>
+<div>
+<h3 class="text-2xl font-bold tracking-tight mb-4 text-on-surface">Multi-fuel support</h3>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="px-3 py-1 bg-surface-container rounded-full text-[10px] font-bold uppercase tracking-wider">Petrol</span>
+<span class="px-3 py-1 bg-surface-container rounded-full text-[10px] font-bold uppercase tracking-wider">Diesel</span>
+<span class="px-3 py-1 bg-surface-container rounded-full text-[10px] font-bold uppercase tracking-wider">CNG</span>
+<span class="px-3 py-1 bg-surface-container rounded-full text-[10px] font-bold uppercase tracking-wider">EV</span>
+</div>
+<p class="text-on-surface-variant text-sm leading-relaxed">One unified app covering every fuel type in India — aggregated from official APIs, OpenStreetMap, Open Charge Map, e-Amrit, and community contributions.</p>
+</div>
+</div>
+<!-- Add new stations -->
+<div class="md:col-span-4 bg-[#FF725E] rounded-lg p-10 flex flex-col justify-between group text-white"><span class="material-symbols-outlined text-white text-4xl group-hover:translate-y-[-4px] transition-transform" data-icon="add_location">add_location</span>
+<div>
+<h3 class="text-2xl font-bold tracking-tight mb-4">Add new stations</h3>
+<p class="text-white/80 text-sm leading-relaxed">Spotted a station that isn't on the map? Submit it in seconds with fuel-type flags and photos — your contribution appears in the live feed for everyone nearby.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- How It Works Section -->
+<section class="bg-[#F5EDE8] py-32 rounded-t-[4rem] dark:bg-[#0f1014] dark:border-t dark:border-stone-800/80">
+<div class="max-w-7xl mx-auto px-8">
+<div class="text-center mb-24">
+<span class="text-primary font-bold tracking-widest text-xs uppercase mb-4 block">The Workflow</span>
+<h2 class="text-5xl font-extrabold tracking-tighter text-on-surface dark:text-stone-50">Intelligent Refueling Cycle</h2>
+</div>
+<div class="relative">
+<!-- Connector Line (Architectural Diagram Style) -->
+<div class="hidden md:block absolute top-[60px] left-0 w-full h-[2px] bg-outline-variant/30 z-0 dark:bg-gradient-to-r dark:from-stone-700/30 dark:via-stone-500/50 dark:to-stone-700/30"></div>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12 relative z-10">
+<!-- Step 1 -->
+<div class="flex flex-col items-center md:items-start group">
+<div class="w-20 h-20 rounded-full bg-white flex items-center justify-center shadow-lg mb-8 group-hover:bg-primary transition-colors dark:bg-stone-900 dark:border dark:border-stone-700 dark:shadow-[0_14px_30px_rgba(0,0,0,0.35)]">
+<span class="material-symbols-outlined text-primary text-3xl group-hover:text-white" data-icon="location_on">location_on</span>
+</div>
+<h4 class="text-xl font-bold mb-4 dark:text-stone-100">Detect your location</h4>
+<p class="text-on-surface-variant text-sm leading-relaxed md:pr-4 dark:text-stone-300">A background GPS service uses low-energy pings and a 50-metre geofence to sense your position near every station — without draining your battery.</p>
+</div>
+<!-- Step 2 -->
+<div class="flex flex-col items-center md:items-start group">
+<div class="w-20 h-20 rounded-full bg-white flex items-center justify-center shadow-lg mb-8 group-hover:bg-primary transition-colors dark:bg-stone-900 dark:border dark:border-stone-700 dark:shadow-[0_14px_30px_rgba(0,0,0,0.35)]">
+<span class="material-symbols-outlined text-primary text-3xl group-hover:text-white" data-icon="local_gas_station">local_gas_station</span>
+</div>
+<h4 class="text-xl font-bold mb-4 dark:text-stone-100">Discover nearby stations</h4>
+<p class="text-on-surface-variant text-sm leading-relaxed md:pr-4 dark:text-stone-300">Refuel merges over 44,000 verified stations from official APIs, OpenStreetMap, Open Charge Map, e-Amrit, and user contributions — filtered to match your vehicle.</p>
+</div>
+<!-- Step 3 -->
+<div class="flex flex-col items-center md:items-start group">
+<div class="w-20 h-20 rounded-full bg-white flex items-center justify-center shadow-lg mb-8 group-hover:bg-primary transition-colors dark:bg-stone-900 dark:border dark:border-stone-700 dark:shadow-[0_14px_30px_rgba(0,0,0,0.35)]">
+<span class="material-symbols-outlined text-primary text-3xl group-hover:text-white" data-icon="analytics">analytics</span>
+</div>
+<h4 class="text-xl font-bold mb-4 dark:text-stone-100">Read live crowd data</h4>
+<p class="text-on-surface-variant text-sm leading-relaxed md:pr-4 dark:text-stone-300">Every device confirms intent through a short popup. Refuel tallies real vehicles, weighs recent dwell times, and updates each station's crowd level in real time.</p>
+</div>
+<!-- Step 4 -->
+<div class="flex flex-col items-center md:items-start group">
+<div class="w-20 h-20 rounded-full bg-primary flex items-center justify-center shadow-lg mb-8 dark:shadow-[0_16px_34px_rgba(171,53,38,0.34)]">
+<span class="material-symbols-outlined text-white text-3xl" data-icon="check_circle">check_circle</span>
+</div>
+<h4 class="text-xl font-bold mb-4 dark:text-stone-100">Get the fastest station</h4>
+<p class="text-on-surface-variant text-sm leading-relaxed md:pr-4 dark:text-stone-300">Refuel picks the best station by combining crowd level, estimated wait time, and distance — not just proximity — so you skip the queue every time.</p>
+</div>
+</div>
+</div>
+<!-- Visual Detail -->
+<div class="mt-32 rounded-lg overflow-hidden h-[500px] relative dark:border dark:border-stone-800/80 dark:shadow-[0_24px_60px_rgba(0,0,0,0.42)]">
+<img class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000 dark:brightness-[0.72] dark:contrast-[1.08]" data-alt="cinematic shot of a modern car dashboard display showing a minimalist navigation interface during a sunset drive" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAlMXYzOLbzoMyBefv4kQV6wOyOXKvyCFeswISzwa_Y6o4lQy6HNJGUPsy4VWRX_IRmUQKAkIdKOLPUNDnQuS34Gj-ugRmPs30GaqGrbXPTa8pqEHfmXmkT6wqj-GjM1dO3U4HIHKp7KA3lqDqHcRe95MUPXhWaPA9Z9EThoKKNaH4pSSKddrC6EPfoTAFU6SRMY6jzdWxyjoaUXjbAiLiAmFW7_R8qJhOKKZfoQJ3oS4OCulcJso8sSPudx6N8UGnQetjZvakA9uw"/>
+<div class="absolute inset-0 bg-gradient-to-t from-[#F5EDE8] via-transparent to-transparent dark:from-[#0f1014] dark:via-[#0f1014]/35 dark:to-transparent"></div>
+<div class="absolute bottom-12 left-12 max-w-lg">
+<div class="glass-card p-10 rounded-lg dark:bg-stone-950/78 dark:border dark:border-stone-700/70 dark:shadow-[0_18px_44px_rgba(0,0,0,0.4)]">
+<h5 class="text-3xl font-black tracking-tighter mb-4 dark:text-stone-50">Designed for every Indian driver.</h5>
+<p class="text-on-surface-variant dark:text-stone-300">A clean, distraction-free interface with animated 3D vehicle markers, colour-coded crowd badges, and support for five Indian languages.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full rounded-t-[40px] mt-24 bg-stone-100 dark:bg-stone-950">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12 px-12 py-20 max-w-7xl mx-auto font-manrope text-sm leading-relaxed">
+<div class="col-span-1">
+<div class="text-xl font-black text-stone-900 dark:text-stone-50 mb-6">REFUEL</div>
+<p class="text-stone-500 dark:text-stone-400">Real-time fuel and EV navigation, built for Indian motorists.</p>
+</div>
+<div class="col-span-1">
+<h6 class="font-bold text-stone-900 dark:text-stone-50 mb-6">Product</h6>
+<ul class="space-y-4">
+<li><a class="text-stone-500 dark:text-stone-400 hover:text-[#FF725E] transition-colors" href="features.html">Features</a></li>
+<li><a class="text-stone-500 dark:text-stone-400 hover:text-[#FF725E] transition-colors" href="docs.html">Wait Times</a></li>
+<li><a class="text-stone-500 dark:text-stone-400 hover:text-[#FF725E] transition-colors" href="docs.html">Integration</a></li>
+</ul>
+</div>
+<div class="col-span-1">
+<h6 class="font-bold text-stone-900 dark:text-stone-50 mb-6">Legal</h6>
+<ul class="space-y-4">
+<li><a class="text-stone-500 dark:text-stone-400 hover:text-[#FF725E] transition-colors" href="#">Privacy</a></li>
+<li><a class="text-stone-500 dark:text-stone-400 hover:text-[#FF725E] transition-colors" href="#">Terms</a></li>
+</ul>
+</div>
+<div class="col-span-1">
+<h6 class="font-bold text-stone-900 dark:text-stone-50 mb-6">Social</h6>
+<div class="flex gap-4">
+<a class="text-stone-500 dark:text-stone-400 hover:text-[#FF725E] transition-colors" href="#">Twitter</a>
+<a class="text-stone-500 dark:text-stone-400 hover:text-[#FF725E] transition-colors" href="#">LinkedIn</a>
+<a class="text-stone-500 dark:text-stone-400 hover:text-[#FF725E] transition-colors" href="#">GitHub</a>
+</div>
+</div>
+</div>
+<div class="max-w-7xl mx-auto px-12 pb-12">
+<div class="pt-8 border-t border-stone-200 dark:border-stone-800 text-stone-400 text-xs">
+                © 2026 REFUEL. Real-Time Fuel &amp; EV Navigation for India.
+            </div>
+</div>
+</footer>
+<script src="assets/ui-shell.js"></script>
+</body></html>
